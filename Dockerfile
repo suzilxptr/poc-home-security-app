@@ -1,5 +1,9 @@
 FROM node:20-alpine
 
+# MongoDB connection URL should be provided at runtime via environment variable
+# This will be set by Render.com from the Environment Variables dashboard
+ENV MONGODB_CONNECTION_URL=""
+
 WORKDIR /app
 
 # Install git for cloning
@@ -29,5 +33,5 @@ EXPOSE 7547 7557
 # Set production environment
 ENV NODE_ENV=production
 
-# Use entrypoint script
-ENTRYPOINT ["/entrypoint.sh"]
+# Use sh -c to ensure env vars are passed properly
+CMD ["/bin/sh", "/entrypoint.sh"]
