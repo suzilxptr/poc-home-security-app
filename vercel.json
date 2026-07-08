@@ -1,9 +1,4 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "env": {
-    "VITE_NBI_URL": {
-      "description": "GenieACS NBI API URL (e.g., https://your-genieacs.railway.app)"
-    }
-  }
+  "outputDirectory": "dist"
 }
