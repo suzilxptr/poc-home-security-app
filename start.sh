@@ -82,6 +82,9 @@ server.listen(80, '0.0.0.0', () => {
 });
 PROXY_EOF
 
+# Copy CPE simulator to /tmp for spawning
+cp cpe-simulator.js /tmp/cpe-simulator.js
+
 # Use exec to replace shell process
 exec node -e "
 const cwmp = require('child_process').spawn('node', ['dist/bin/genieacs-cwmp'], {
@@ -104,6 +107,21 @@ setTimeout(() => {
       stdio: 'inherit'
     });
   }, 2000);
+
+  // Spawn 5 CPE simulators
+  for (let i = 1; i <= 5; i++) {
+    setTimeout(() => {
+      const deviceId = 'DE-AD-BE-EF-000' + i;
+      console.log('[CPE Simulator] Starting device ' + deviceId);
+      const cpe = require('child_process').spawn('node', ['/tmp/cpe-simulator.js'], {
+        stdio: 'inherit',
+        env: Object.assign({}, process.env, {
+          ACS_URL: 'http://localhost:7547',
+          DEVICE_ID: deviceId
+        })
+      });
+    }, 3000 + (i * 1000));
+  }
 }, 2000);
 
 process.on('SIGTERM', () => {
