@@ -30,6 +30,8 @@ echo ""
 
 # Pass MongoDB URL as env var to Node processes (GenieACS requires GENIEACS_ prefix)
 export GENIEACS_MONGODB_CONNECTION_URL="$GENIEACS_MONGODB_CONNECTION_URL"
+export GENIEACS_NBI_PORT=80
+export GENIEACS_NBI_INTERFACE=0.0.0.0
 
 # Use exec to replace shell process
 exec node -e "
@@ -41,7 +43,11 @@ const cwmp = require('child_process').spawn('node', ['dist/bin/genieacs-cwmp'], 
 setTimeout(() => {
   const nbi = require('child_process').spawn('node', ['dist/bin/genieacs-nbi'], {
     stdio: 'inherit',
-    env: Object.assign({}, process.env, { GENIEACS_MONGODB_CONNECTION_URL: '$GENIEACS_MONGODB_CONNECTION_URL' })
+    env: Object.assign({}, process.env, {
+      GENIEACS_MONGODB_CONNECTION_URL: '$GENIEACS_MONGODB_CONNECTION_URL',
+      GENIEACS_NBI_PORT: '80',
+      GENIEACS_NBI_INTERFACE: '0.0.0.0'
+    })
   });
 }, 2000);
 
