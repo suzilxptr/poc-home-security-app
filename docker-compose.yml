@@ -1,0 +1,67 @@
+services:
+  mongodb:
+    image: mongo:5
+    container_name: genieacs-mongo
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - tr069-lab
+
+  redis:
+    image: redis:7-alpine
+    container_name: genieacs-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - tr069-lab
+
+  cpe-simulator:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - /Users/sbastola/Private/poc-home-security-app/cpe-simulator.js:/app/cpe-simulator.js:ro
+    environment:
+      ACS_URL: http://host.docker.internal:7547
+      NODE_NO_WARNINGS: 1
+    networks:
+      - tr069-lab
+    command: node /app/cpe-simulator.js
+    depends_on:
+      - mongodb
+      - redis
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  cpe-simulator-1:
+    extends: cpe-simulator
+    environment:
+      DEVICE_ID: DE-AD-BE-EF-0001
+
+  cpe-simulator-2:
+    extends: cpe-simulator
+    environment:
+      DEVICE_ID: DE-AD-BE-EF-0002
+
+  cpe-simulator-3:
+    extends: cpe-simulator
+    environment:
+      DEVICE_ID: DE-AD-BE-EF-0003
+
+  cpe-simulator-4:
+    extends: cpe-simulator
+    environment:
+      DEVICE_ID: DE-AD-BE-EF-0004
+
+  cpe-simulator-5:
+    extends: cpe-simulator
+    environment:
+      DEVICE_ID: DE-AD-BE-EF-0005
+
+volumes:
+  mongo_data:
+
+networks:
+  tr069-lab:
+    driver: bridge
