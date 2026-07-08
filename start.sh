@@ -8,6 +8,13 @@ GENIEACS_DIR="/tmp/genieacs"
 
 echo "Starting GenieACS with MongoDB: $MONGODB_CONNECTION_URL"
 
+# Check if MongoDB URL is set
+if [ -z "$MONGODB_CONNECTION_URL" ]; then
+  echo "ERROR: MONGODB_CONNECTION_URL environment variable is not set!"
+  echo "Set it in Render dashboard under Environment Variables"
+  exit 1
+fi
+
 # ALWAYS rebuild - don't cache in /tmp
 echo "Removing any existing GenieACS build..."
 rm -rf "$GENIEACS_DIR"
@@ -52,6 +59,31 @@ ls -la dist/bin/ || {
 echo "Build verified! Files found:"
 ls -1 dist/bin/
 
+# Create GenieACS config file
+echo ""
+echo "================================"
+echo "Creating GenieACS config..."
+echo "================================"
+mkdir -p config
+
+# Create config.json with MongoDB connection
+cat > config/config.json << EOF
+{
+  "mongodb": {
+    "connectionUrl": "$MONGODB_CONNECTION_URL"
+  },
+  "cwmp": {
+    "listenPort": 7547
+  },
+  "nbi": {
+    "listenPort": 7557
+  }
+}
+EOF
+
+echo "Config created at config/config.json:"
+cat config/config.json
+
 echo ""
 echo "================================"
 echo "Starting GenieACS Services"
@@ -59,6 +91,9 @@ echo "MongoDB URL: $MONGODB_CONNECTION_URL"
 echo "Node version: $(node --version)"
 echo "================================"
 echo ""
+
+# Export for GenieACS processes
+export MONGODB_CONNECTION_URL="$MONGODB_CONNECTION_URL"
 
 # Start CWMP service (port 7547)
 echo "[$(date)] Starting CWMP server on port 7547..."
