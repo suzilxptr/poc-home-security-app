@@ -1,48 +1,37 @@
 #!/bin/sh
 
-# Set default MongoDB connection URL if not provided
+# Set MongoDB connection URL - this is what GenieACS expects
 export MONGODB_CONNECTION_URL="${MONGODB_CONNECTION_URL:-mongodb://localhost/genieacs}"
-export GENIEACS_MONGODB_CONNECTION_URL="${MONGODB_CONNECTION_URL}"
-export REDIS_URL="${REDIS_URL:-}"
 export NODE_ENV="${NODE_ENV:-production}"
 
-echo "Starting GenieACS"
-echo "MongoDB URL: $MONGODB_CONNECTION_URL"
-echo "Node env: $NODE_ENV"
+echo "================================"
+echo "Starting GenieACS Backend"
+echo "================================"
+echo "MongoDB: $MONGODB_CONNECTION_URL"
+echo "Node Environment: $NODE_ENV"
+echo "================================"
+echo ""
 
-# Create GenieACS config directory
-mkdir -p /etc/genieacs
+# Make sure we're in the right directory
+cd /genieacs
 
-# Create config file for GenieACS
-cat > /etc/genieacs/config.json << EOF
-{
-  "mongodb": {
-    "connectionUrl": "$MONGODB_CONNECTION_URL"
-  },
-  "redis": {
-    "url": "$REDIS_URL"
-  }
-}
-EOF
+# Start CWMP and NBI on separate ports
+# CWMP listens on 7547
+# NBI listens on 7557
 
-echo "Created config file:"
-cat /etc/genieacs/config.json
-
-# Export for GenieACS
-export GENIEACS_CONFIG_FILE=/etc/genieacs/config.json
-
-# Start both services
-echo "Starting CWMP server..."
-node /genieacs/dist/bin/genieacs-cwmp &
+echo "[$(date)] Starting genieacs-cwmp (port 7547)..."
+node dist/bin/genieacs-cwmp &
 CWMP_PID=$!
-echo "CWMP started with PID $CWMP_PID"
 
-sleep 2
+echo "[$(date)] Waiting 3 seconds..."
+sleep 3
 
-echo "Starting NBI server..."
-node /genieacs/dist/bin/genieacs-nbi &
+echo "[$(date)] Starting genieacs-nbi (port 7557)..."
+node dist/bin/genieacs-nbi &
 NBI_PID=$!
-echo "NBI started with PID $NBI_PID"
 
-# Wait for both processes
-wait $CWMP_PID $NBI_PID
+echo "[$(date)] Both services started. PIDs: CWMP=$CWMP_PID, NBI=$NBI_PID"
+echo "[$(date)] Waiting for processes..."
+
+# Wait for both to complete
+wait
