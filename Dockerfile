@@ -2,17 +2,19 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+# Install git for cloning
+RUN apk add --no-cache git
+
 # Configure npm to use public registry
 RUN npm config set registry https://registry.npmjs.org/
 
-# Copy package files first
-COPY package*.json ./
+# Clone GenieACS from GitHub
+RUN git clone https://github.com/genieacs/genieacs.git /genieacs
 
-# Install dependencies with npm ci (cleaner than npm install)
+WORKDIR /genieacs
+
+# Install GenieACS dependencies
 RUN npm ci
-
-# Copy the entire project
-COPY . .
 
 # Build GenieACS
 RUN npm run build
@@ -22,6 +24,7 @@ EXPOSE 7547 7557
 
 # Set production environment
 ENV NODE_ENV=production
+ENV MONGODB_CONNECTION_URL=${MONGODB_CONNECTION_URL:-mongodb://localhost/genieacs}
 
 # Start both CWMP and NBI services
-CMD node dist/bin/genieacs-cwmp & node dist/bin/genieacs-nbi & wait
+CMD node /genieacs/dist/bin/genieacs-cwmp & node /genieacs/dist/bin/genieacs-nbi & wait
