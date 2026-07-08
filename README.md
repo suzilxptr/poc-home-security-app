@@ -62,9 +62,9 @@ All 5 devices appear after 30-60 seconds with **Online** status (green).
 
 Deploy for free to **Vercel** (frontend) and **Railway** (backend):
 
-📖 See **[DEPLOY.md](DEPLOY.md)** - Complete guide (30 minutes)
+📖 See **[DEPLOY.md](DEPLOY.md)** - Complete guide (25 minutes)
 
-**Free services:** Vercel + Railway + MongoDB Atlas + Redis Cloud  
+**Free services:** Vercel + Railway + MongoDB Atlas  
 **Total cost: $0** ✅
 
 ## Project Structure

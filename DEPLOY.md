@@ -10,7 +10,6 @@ Deploy to:
 - **Frontend**: Vercel (free)
 - **Backend**: Railway (free $5 credits)
 - **Database**: MongoDB Atlas (free 512MB)
-- **Cache**: Redis Cloud (free 30MB)
 
 **Total cost: $0**
 
@@ -24,9 +23,7 @@ Deploy to:
 
 ---
 
-## Part 1: Create Cloud Databases (10 min)
-
-### MongoDB Atlas
+## Part 1: Create MongoDB Database (5 min)
 
 1. Go to https://www.mongodb.com/cloud/atlas
 2. Sign up (email or GitHub)
@@ -38,16 +35,6 @@ Deploy to:
 8. Copy connection string: `mongodb+srv://user:pass@...`
 9. Replace `<password>` with your password
 10. Save this URL as `MONGODB_URL`
-
-### Redis Cloud
-
-1. Go to https://redis.com/try-free/
-2. Sign up (email or GitHub)
-3. Accept defaults → Create
-4. Wait 30 seconds
-5. Click your database → Connect
-6. Copy Redis URL: `redis://default:pass@host:port`
-7. Save this URL as `REDIS_URL`
 
 ---
 
@@ -63,10 +50,9 @@ Deploy to:
 While building, add environment variables:
 
 7. Go to **Variables** tab
-8. Click **New Variable** three times and add:
+8. Click **New Variable** twice and add:
    ```
    MONGODB_CONNECTION_URL = mongodb+srv://user:pass@...
-   REDIS_URL = redis://default:pass@...
    NODE_ENV = production
    ```
 9. Wait 3-5 minutes for build/deployment
