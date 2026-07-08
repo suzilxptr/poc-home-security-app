@@ -2,7 +2,8 @@ FROM node:20-alpine
 
 # MongoDB connection URL should be provided at runtime via environment variable
 # This will be set by Render.com from the Environment Variables dashboard
-ENV MONGODB_CONNECTION_URL=""
+# GenieACS requires the GENIEACS_ prefix
+ENV GENIEACS_MONGODB_CONNECTION_URL=""
 
 WORKDIR /app
 

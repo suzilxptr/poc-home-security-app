@@ -8,7 +8,7 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: MONGODB_CONNECTION_URL
+      - key: GENIEACS_MONGODB_CONNECTION_URL
         sync: false
     autoDeploy: true
     plan: free

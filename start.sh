@@ -8,8 +8,8 @@ echo "======================================"
 echo ""
 
 # Verify env var
-if [ -z "$MONGODB_CONNECTION_URL" ]; then
-  echo "ERROR: MONGODB_CONNECTION_URL environment variable is not set!"
+if [ -z "$GENIEACS_MONGODB_CONNECTION_URL" ]; then
+  echo "ERROR: GENIEACS_MONGODB_CONNECTION_URL environment variable is not set!"
   echo "Please set it in Render dashboard under Environment Variables"
   exit 1
 fi
@@ -28,20 +28,20 @@ npm run build > /dev/null 2>&1
 echo "GenieACS ready!"
 echo ""
 
-# Pass MongoDB URL as env var to Node processes
-export MONGODB_CONNECTION_URL="$MONGODB_CONNECTION_URL"
+# Pass MongoDB URL as env var to Node processes (GenieACS requires GENIEACS_ prefix)
+export GENIEACS_MONGODB_CONNECTION_URL="$GENIEACS_MONGODB_CONNECTION_URL"
 
 # Use exec to replace shell process
 exec node -e "
 const cwmp = require('child_process').spawn('node', ['dist/bin/genieacs-cwmp'], {
   stdio: 'inherit',
-  env: Object.assign({}, process.env, { MONGODB_CONNECTION_URL: '$MONGODB_CONNECTION_URL' })
+  env: Object.assign({}, process.env, { GENIEACS_MONGODB_CONNECTION_URL: '$GENIEACS_MONGODB_CONNECTION_URL' })
 });
 
 setTimeout(() => {
   const nbi = require('child_process').spawn('node', ['dist/bin/genieacs-nbi'], {
     stdio: 'inherit',
-    env: Object.assign({}, process.env, { MONGODB_CONNECTION_URL: '$MONGODB_CONNECTION_URL' })
+    env: Object.assign({}, process.env, { GENIEACS_MONGODB_CONNECTION_URL: '$GENIEACS_MONGODB_CONNECTION_URL' })
   });
 }, 2000);
 

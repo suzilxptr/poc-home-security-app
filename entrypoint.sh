@@ -1,13 +1,14 @@
 #!/bin/sh
 
 # Set MongoDB connection URL - this is what GenieACS expects
-export MONGODB_CONNECTION_URL="${MONGODB_CONNECTION_URL:-mongodb://localhost/genieacs}"
+# GenieACS requires the GENIEACS_ prefix for environment variables
+export GENIEACS_MONGODB_CONNECTION_URL="${GENIEACS_MONGODB_CONNECTION_URL:-mongodb://localhost/genieacs}"
 export NODE_ENV="${NODE_ENV:-production}"
 
 echo "================================"
 echo "Starting GenieACS Backend"
 echo "================================"
-echo "MongoDB: $MONGODB_CONNECTION_URL"
+echo "MongoDB: $GENIEACS_MONGODB_CONNECTION_URL"
 echo "Node Environment: $NODE_ENV"
 echo "================================"
 echo ""
