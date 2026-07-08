@@ -1,0 +1,37 @@
+# Fly.io configuration for GenieACS deployment
+app = "genieacs-api"
+primary_region = "ord"  # Chicago - change to closest region
+
+[build]
+  builder = "heroku"
+  buildpacks = ["heroku/nodejs"]
+
+[env]
+  NODE_ENV = "production"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 7547
+  external_port = 443
+  auto_stop_machines = true
+  auto_start_machines = true
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 1000
+    soft_limit = 800
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 7557
+  external_port = 443
+  auto_stop_machines = true
+  auto_start_machines = true
+
+[[statics]]
+  guest_path = "/app/dist"
+  url_prefix = "/"
+
+[mounts]
+  source = "genieacs_data"
+  destination = "/app/data"
+  initial_size = "1gb"

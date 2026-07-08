@@ -60,12 +60,15 @@ All 5 devices appear after 30-60 seconds with **Online** status (green).
 
 ## Deployment
 
-Deploy for free to **Vercel** (frontend) and **Railway** (backend):
+Deploy for free to **Vercel** (frontend) and **Fly.io** (backend):
 
-📖 See **[DEPLOY.md](DEPLOY.md)** - Complete guide (25 minutes)
+📖 See **[FLY_DEPLOYMENT.md](FLY_DEPLOYMENT.md)** - Complete guide with Fly.io
 
-**Free services:** Vercel + Railway + MongoDB Atlas  
-**Total cost: $0** ✅
+**Free services:** Vercel + Fly.io + MongoDB Atlas  
+**Total cost: $0/month** ✅  
+**Uptime: 24/7** ✅
+
+Share your backend URL with users to test!
 
 ## Project Structure
 

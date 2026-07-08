@@ -1,3 +1,14 @@
+⭐ UPDATED FOR FLY.IO - COMPLETELY FREE BACKEND ⭐
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👉 READ: FLY_DEPLOYMENT.md (this is the updated guide for Fly.io!)
+
+TLDR: Fly.io is free and perfect for your use case.
+- Deploy GenieACS API remotely
+- Share public URL with users
+- 24/7 uptime
+- $0/month cost
+
 🚀 DEPLOYMENT INSTRUCTIONS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
