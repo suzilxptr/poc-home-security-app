@@ -4,7 +4,7 @@ import { DeviceList } from './DeviceList';
 import { DeviceDetails } from './DeviceDetails';
 import { Settings } from './Settings';
 import { MonitoringChart } from './MonitoringChart';
-import { Loader, AlertCircle } from 'lucide-react';
+import { Loader, AlertCircle, RotateCw } from 'lucide-react';
 
 export const Dashboard: React.FC = () => {
   const {
@@ -21,11 +21,7 @@ export const Dashboard: React.FC = () => {
 
   const selectedDevice = devices.find((d) => d._id === selectedDeviceId);
 
-  useEffect(() => {
-    fetchDevices();
-    const interval = setInterval(fetchDevices, config.pollingInterval);
-    return () => clearInterval(interval);
-  }, [config.pollingInterval]);
+  // Polling removed - users can click refresh button manually
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -40,7 +36,17 @@ export const Dashboard: React.FC = () => {
                 TR-069 / CPE Management System
               </p>
             </div>
-            <Settings config={config} onConfigChange={setConfig} />
+            <div className="flex items-center gap-3">
+              <button
+                onClick={fetchDevices}
+                disabled={loading}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white rounded-lg transition-colors font-medium"
+              >
+                <RotateCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                Refresh
+              </button>
+              <Settings config={config} onConfigChange={setConfig} />
+            </div>
           </div>
         </div>
       </header>
