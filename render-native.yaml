@@ -1,0 +1,16 @@
+# Deploy using Render's native Node.js runtime (not Docker)
+# This properly handles environment variables
+
+services:
+  - type: web
+    name: genieacs-api
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: bash start.sh
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_CONNECTION_URL
+        sync: false
+    autoDeploy: true
