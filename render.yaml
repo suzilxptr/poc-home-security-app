@@ -1,16 +1,12 @@
 services:
   - type: web
     name: genieacs-api
-    runtime: node
-    buildCommand: npm install && npm run build
-    startCommand: node dist/bin/genieacs-cwmp & node dist/bin/genieacs-nbi & wait
+    runtime: docker
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: NODE_ENV
         value: production
       - key: MONGODB_CONNECTION_URL
         sync: false
-      - key: PORT
-        value: "7557"
     autoDeploy: true
-    healthCheckPath: /devices
     plan: free
