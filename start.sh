@@ -28,8 +28,10 @@ npm run build > /dev/null 2>&1
 echo "GenieACS ready!"
 echo ""
 
-# Pass MongoDB URL as env var to Node processes (GenieACS requires GENIEACS_ prefix)
+# Pass MongoDB URL and limit worker processes for free tier memory constraints
 export GENIEACS_MONGODB_CONNECTION_URL="$GENIEACS_MONGODB_CONNECTION_URL"
+export GENIEACS_CWMP_WORKER_PROCESSES=1
+export GENIEACS_NBI_WORKER_PROCESSES=1
 
 # Use exec to replace shell process
 exec node -e "

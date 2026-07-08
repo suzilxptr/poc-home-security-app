@@ -4,6 +4,8 @@
 # GenieACS requires the GENIEACS_ prefix for environment variables
 export GENIEACS_MONGODB_CONNECTION_URL="${GENIEACS_MONGODB_CONNECTION_URL:-mongodb://localhost/genieacs}"
 export NODE_ENV="${NODE_ENV:-production}"
+export GENIEACS_CWMP_WORKER_PROCESSES="${GENIEACS_CWMP_WORKER_PROCESSES:-1}"
+export GENIEACS_NBI_WORKER_PROCESSES="${GENIEACS_NBI_WORKER_PROCESSES:-1}"
 
 echo "================================"
 echo "Starting GenieACS Backend"

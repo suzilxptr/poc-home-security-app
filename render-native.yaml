@@ -13,4 +13,8 @@ services:
         value: production
       - key: GENIEACS_MONGODB_CONNECTION_URL
         sync: false
+      - key: GENIEACS_CWMP_WORKER_PROCESSES
+        value: "1"
+      - key: GENIEACS_NBI_WORKER_PROCESSES
+        value: "1"
     autoDeploy: true
