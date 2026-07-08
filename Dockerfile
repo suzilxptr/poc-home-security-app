@@ -19,8 +19,9 @@ RUN npm ci
 # Build GenieACS
 RUN npm run build
 
-# Create config directory
-RUN mkdir -p /etc/genieacs
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Expose ports
 EXPOSE 7547 7557
@@ -28,9 +29,5 @@ EXPOSE 7547 7557
 # Set production environment
 ENV NODE_ENV=production
 
-# Start both CWMP and NBI services with MongoDB connection URL
-CMD sh -c 'export MONGODB_CONNECTION_URL="${MONGODB_CONNECTION_URL:-mongodb://localhost/genieacs}" && \
-           export REDIS_URL="${REDIS_URL:-}" && \
-           node /genieacs/dist/bin/genieacs-cwmp & \
-           node /genieacs/dist/bin/genieacs-nbi & \
-           wait'
+# Use entrypoint script
+ENTRYPOINT ["/entrypoint.sh"]
