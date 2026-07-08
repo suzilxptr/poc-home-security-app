@@ -1,70 +1,99 @@
-⭐ FLY.IO DEPLOYMENT - COMPLETELY FREE ⭐
+⭐ RENDER.COM DEPLOYMENT - COMPLETELY FREE FOREVER ⭐
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Your code is pushed to GitHub! Now deploy to Fly.io (free backend).
+Your code is pushed to GitHub! Now deploy to Render.com (free, no trial limit).
 
-📖 FOR COMPLETE GUIDE: Read FLY_DEPLOYMENT.md in your repo
+📖 FOR COMPLETE GUIDE: Read RENDER_DEPLOYMENT.md in your repo
 
-But here's the quick version:
+Quick version below ↓
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-STEP 1: SETUP (5 minutes)
+WHY RENDER.COM?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-1. Create Fly.io account:
-   https://fly.io (sign up with GitHub)
-
-2. Install Flyctl (CLI tool):
-   Mac: brew install flyctl
-   Linux: curl -L https://fly.io/install.sh | sh
-
-3. Login to Fly:
-   flyctl auth login
-   (opens browser window)
-
-4. Make sure you have MongoDB URL:
-   mongodb+srv://user:password@cluster.mongodb.net/genieacs
+✅ Free forever (no credit card, no trial limit)
+✅ Auto-sleeps when idle (wakes in ~10-30 seconds)
+✅ HTTPS included
+✅ Auto-deploy from GitHub
+✅ Perfect for MVP testing
+✅ Easy to upgrade later
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-STEP 2: DEPLOY TO FLY.IO (10 minutes)
+STEP 1: CREATE RENDER ACCOUNT (2 minutes)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-1. Go to your project directory:
-   cd /Users/sbastola/Private/poc-home-security-app
-
-2. Launch Fly app:
-   flyctl launch
-
-   Answer prompts:
-   - App name: genieacs-api
-   - Region: choose closest to you
-   - PostgreSQL: No
-   - Redis: No
-
-3. Set MongoDB connection:
-   flyctl secrets set MONGODB_CONNECTION_URL="mongodb+srv://user:pass@cluster.mongodb.net/genieacs"
-
-   (Replace with your actual MongoDB URL)
-
-4. Deploy:
-   flyctl deploy
-
-   Wait 5-10 minutes. Once done, you'll see:
-   ✅ Visit your newly deployed app at: https://genieacs-api.fly.dev
-
-5. Save your URL:
-   RAILWAY_URL = https://genieacs-api.fly.dev
-   (or whatever app name you chose)
+1. Go to: https://render.com
+2. Sign up with GitHub (just click GitHub button)
+3. Authorize Render to access your GitHub
+4. Done! No credit card needed.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-STEP 3: VERIFY IT WORKS (1 minute)
+STEP 2: MAKE SURE YOU HAVE MONGODB URL (5 minutes)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Test your API:
-curl https://genieacs-api.fly.dev/devices
+If you haven't created MongoDB yet:
+
+1. Go to: https://www.mongodb.com/cloud/atlas
+2. Sign up with GitHub
+3. Create project → Create Deployment
+4. Select: M0 Sandbox (free)
+5. Wait 1-2 minutes
+6. Click "Connect" → Drivers → Node.js
+7. Copy connection string
+8. Replace <password> with your password
+9. SAVE: MONGODB_URL = mongodb+srv://user:pass@...
+
+If you already have it, just save the URL.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 3: DEPLOY TO RENDER (5 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Go to Render dashboard: https://dashboard.render.com
+
+2. Click: **New +** → **Web Service**
+
+3. Click: **Build and deploy from a Git repository**
+
+4. Click: **GitHub** (authorize if needed)
+
+5. Find your repo: **poc-home-security-app**
+
+6. Click: **Connect**
+
+7. Fill in the form:
+   - Name: genieacs-api
+   - Region: Choose closest to you
+   - Plan: **Free** (important!)
+
+8. Scroll down to "Environment" section
+
+9. Add environment variable:
+   - Key: MONGODB_CONNECTION_URL
+   - Value: (your MongoDB URL from Step 2)
+
+10. Click: **Create Web Service**
+
+11. Wait 5-10 minutes for deployment
+
+12. Once done, Render shows your URL:
+    https://genieacs-api.onrender.com
+    (yours will be different)
+
+13. SAVE THIS URL: RENDER_URL
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 4: TEST BACKEND (1 minute)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open terminal and run:
+
+curl https://genieacs-api.onrender.com/devices
 
 Should return: []
 
@@ -72,90 +101,86 @@ Should return: []
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-STEP 4: DEPLOY FRONTEND TO VERCEL (8 minutes)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 5: DEPLOY FRONTEND TO VERCEL (8 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 1. Go to: https://vercel.com
-2. Sign up with GitHub (suzilxptr)
-3. Click "Add New" → "Project"
-4. Select "Import Git Repository"
-5. Find and select "poc-home-security-app"
+2. Sign up with GitHub (if not already)
+3. Click: **Add New** → **Project**
+4. Click: **Import Git Repository**
+5. Find: **poc-home-security-app**
+6. Click: **Import**
 
-6. BEFORE DEPLOYING, set environment variable:
-   - Click "Environment Variables"
+7. BEFORE deploying, set environment variable:
+   - Click: **Environment Variables**
    - Name: VITE_NBI_URL
-   - Value: https://genieacs-api.fly.dev
-   (use your actual Fly.io URL)
+   - Value: https://genieacs-api.onrender.com
+   (Use your actual Render URL from Step 3)
 
-7. Click "Deploy"
-8. Wait 2-3 minutes
-9. Copy your Vercel URL: https://your-app.vercel.app
+8. Click: **Deploy**
+9. Wait 2-3 minutes
+10. Copy your Vercel URL: https://your-app.vercel.app
+11. SAVE THIS URL: VERCEL_URL
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-STEP 5: TEST & SHARE (2 minutes)
+STEP 6: VERIFY & CONNECT (2 minutes)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-1. Open your Vercel URL in browser:
-   https://your-app.vercel.app
-
+1. Open your Vercel URL in browser: https://your-app.vercel.app
 2. Should see: Home Security Dashboard
-3. No errors in console (F12 → Console)
+3. Click: **Settings** (top right)
+4. Verify: **NBI URL** = your Render URL
+5. Refresh page (Cmd+R or Ctrl+R)
 
-4. (Optional) Run virtual device from your machine:
-   ACS_URL=https://genieacs-api.fly.dev node cpe-simulator.js
-
-   Wait 30-60 seconds, refresh dashboard
-   Device should appear as "Online"
-
-✅ DONE! Your app is live!
+✅ Your app is now connected!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🎉 YOUR PUBLIC URLS
+🎉 YOU'RE DONE! SHARE YOUR URLS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Share these with users:
-
-Frontend Dashboard:
+Frontend Dashboard (for users to view):
   https://your-app.vercel.app
 
-Backend API (GenieACS):
-  https://genieacs-api.fly.dev
+Backend API (for devices to connect):
+  https://genieacs-api.onrender.com
 
-GitHub Repo:
+GitHub Repository:
   https://github.com/suzilxptr/poc-home-security-app
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💰 COST BREAKDOWN
+💰 COST
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Service              Cost        Why
 ─────────────────────────────────────────────────
 Vercel               $0          100GB free bandwidth
-Fly.io               $0          $5 free credit/month
+Render               $0          Free tier (sleeps when idle)
 MongoDB Atlas        $0          512MB free database
 ─────────────────────────────────────────────────
-TOTAL                $0/month    Completely free!
+TOTAL                $0/month    Completely FREE!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📚 HELP & TROUBLESHOOTING
+❓ HOW DOES AUTO-SLEEP WORK?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Check logs:
-  flyctl logs
+✅ Service sleeps after 15 minutes of no requests
+✅ Uses 0 resources while sleeping
+✅ Wakes instantly when someone accesses it (~10-30 sec first time)
+✅ Perfect for MVP testing and demos
 
-App status:
-  flyctl status
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-See secrets:
-  flyctl secrets list
+📚 HELP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-More help:
-  Read FLY_DEPLOYMENT.md (complete guide with troubleshooting)
+Read: RENDER_DEPLOYMENT.md (detailed guide with troubleshooting)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Ready? Start with STEP 1! 🚀
+
+Your MVP is about to go live!

@@ -60,13 +60,14 @@ All 5 devices appear after 30-60 seconds with **Online** status (green).
 
 ## Deployment
 
-Deploy for free to **Vercel** (frontend) and **Fly.io** (backend):
+Deploy for free to **Vercel** (frontend) and **Render.com** (backend):
 
-📖 See **[FLY_DEPLOYMENT.md](FLY_DEPLOYMENT.md)** - Complete guide with Fly.io
+📖 See **[RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md)** - Complete guide with Render
 
-**Free services:** Vercel + Fly.io + MongoDB Atlas  
-**Total cost: $0/month** ✅  
-**Uptime: 24/7** ✅
+**Free services:** Vercel + Render.com + MongoDB Atlas  
+**Total cost: $0/month forever** ✅  
+**Auto-sleeps when idle** (wakes in ~10-30 seconds)  
+**No trial limit** - Truly free!
 
 Share your backend URL with users to test!
 
