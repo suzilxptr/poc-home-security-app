@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import http from 'http'
+const http = require('http');
 
-const ACS_URL = process.env.ACS_URL || 'http://localhost:7547'
+const ACS_URL = process.env.ACS_URL || 'http://localhost:7547';
 const DEVICE_ID = process.env.DEVICE_ID || 'DE-AD-BE-EF-0001'
 const CHECK_IN_INTERVAL = 30000 // Check in every 30 seconds
 

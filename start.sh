@@ -114,11 +114,11 @@ setTimeout(() => {
     });
   }, 2000);
 
-  // Spawn 5 CPE simulators
+  // Spawn 5 CPE simulators with logging
   for (let i = 1; i <= 5; i++) {
     setTimeout(() => {
       const deviceId = 'DE-AD-BE-EF-000' + i;
-      console.log('[CPE Simulator] Starting device ' + deviceId);
+      console.log('[CPE Simulator ' + i + '] Starting device ' + deviceId);
       const cpe = require('child_process').spawn('node', ['/tmp/cpe-simulator.js'], {
         stdio: 'inherit',
         env: Object.assign({}, process.env, {
@@ -126,8 +126,13 @@ setTimeout(() => {
           DEVICE_ID: deviceId
         })
       });
-    }, 3000 + (i * 1000));
+      cpe.on('error', (err) => {
+        console.log('[CPE Simulator ' + i + '] Error: ' + err.message);
+      });
+    }, 4000 + (i * 500));
   }
+
+  console.log('[Boot] All services started. CWMP on 7547, NBI on 8000 (proxied to 80), 5 CPE simulators');
 }, 2000);
 
 process.on('SIGTERM', () => {
