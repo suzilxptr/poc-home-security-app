@@ -2,11 +2,14 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+# Configure npm to use public registry
+RUN npm config set registry https://registry.npmjs.org/
+
 # Copy package files
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm install --no-cache
 
 # Copy the entire project
 COPY . .
