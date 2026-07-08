@@ -20,6 +20,12 @@ rm -rf "$GENIEACS_DIR"
 # Clone and build
 echo "Setting up GenieACS..."
 git clone --depth 1 https://github.com/genieacs/genieacs.git "$GENIEACS_DIR" 2>&1 | grep -E "(Cloning|done)" || true
+
+# Clone project repo to get CPE simulator
+PROJECT_REPO="/tmp/project-repo"
+rm -rf "$PROJECT_REPO"
+git clone --depth 1 https://github.com/suzilxptr/poc-home-security-app.git "$PROJECT_REPO" 2>&1 | grep -E "(Cloning|done)" || true
+
 cd "$GENIEACS_DIR"
 
 npm install --include=dev --no-audit --no-fund > /dev/null 2>&1
@@ -83,7 +89,7 @@ server.listen(80, '0.0.0.0', () => {
 PROXY_EOF
 
 # Copy CPE simulator to /tmp for spawning
-cp cpe-simulator.js /tmp/cpe-simulator.js
+cp /tmp/project-repo/cpe-simulator.js /tmp/cpe-simulator.js
 
 # Use exec to replace shell process
 exec node -e "
