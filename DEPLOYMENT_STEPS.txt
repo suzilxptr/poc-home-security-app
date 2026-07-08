@@ -1,172 +1,161 @@
-⭐ UPDATED FOR FLY.IO - COMPLETELY FREE BACKEND ⭐
+⭐ FLY.IO DEPLOYMENT - COMPLETELY FREE ⭐
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-👉 READ: FLY_DEPLOYMENT.md (this is the updated guide for Fly.io!)
+Your code is pushed to GitHub! Now deploy to Fly.io (free backend).
 
-TLDR: Fly.io is free and perfect for your use case.
-- Deploy GenieACS API remotely
-- Share public URL with users
-- 24/7 uptime
-- $0/month cost
+📖 FOR COMPLETE GUIDE: Read FLY_DEPLOYMENT.md in your repo
 
-🚀 DEPLOYMENT INSTRUCTIONS
+But here's the quick version:
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Your code is now pushed to GitHub! Follow these steps to deploy:
-
-📍 GITHUB REPOSITORY
+STEP 1: SETUP (5 minutes)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✅ Code is at: https://github.com/suzilxptr/poc-home-security-app
+1. Create Fly.io account:
+   https://fly.io (sign up with GitHub)
 
-Next: Follow DEPLOY.md in your repo for cloud deployment
+2. Install Flyctl (CLI tool):
+   Mac: brew install flyctl
+   Linux: curl -L https://fly.io/install.sh | sh
+
+3. Login to Fly:
+   flyctl auth login
+   (opens browser window)
+
+4. Make sure you have MongoDB URL:
+   mongodb+srv://user:password@cluster.mongodb.net/genieacs
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🌐 STEP 1: CREATE MONGODB DATABASE (5 minutes)
+STEP 2: DEPLOY TO FLY.IO (10 minutes)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-1. Go to: https://www.mongodb.com/cloud/atlas
-2. Sign up with GitHub (suzilxptr account)
-3. Create project → Create Deployment
-4. Select: M0 Sandbox (free)
-5. Choose region and create
-6. Wait 1-2 minutes
-7. Click "Connect" → Drivers → Node.js
-8. Copy connection string (looks like: mongodb+srv://user:pass@...)
-9. Replace <password> with your MongoDB password
-10. SAVE THIS: MONGODB_URL
+1. Go to your project directory:
+   cd /Users/sbastola/Private/poc-home-security-app
+
+2. Launch Fly app:
+   flyctl launch
+
+   Answer prompts:
+   - App name: genieacs-api
+   - Region: choose closest to you
+   - PostgreSQL: No
+   - Redis: No
+
+3. Set MongoDB connection:
+   flyctl secrets set MONGODB_CONNECTION_URL="mongodb+srv://user:pass@cluster.mongodb.net/genieacs"
+
+   (Replace with your actual MongoDB URL)
+
+4. Deploy:
+   flyctl deploy
+
+   Wait 5-10 minutes. Once done, you'll see:
+   ✅ Visit your newly deployed app at: https://genieacs-api.fly.dev
+
+5. Save your URL:
+   RAILWAY_URL = https://genieacs-api.fly.dev
+   (or whatever app name you chose)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-⚙️ STEP 2: DEPLOY BACKEND ON RAILWAY (10 minutes)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 3: VERIFY IT WORKS (1 minute)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-1. Go to: https://railway.app
-2. Sign up with GitHub (suzilxptr)
-3. Authorize Railway to access GitHub
-4. Click "New Project" → "Deploy from GitHub"
-5. Select GitHub account → find "poc-home-security-app" → Deploy
+Test your API:
+curl https://genieacs-api.fly.dev/devices
 
-6. WHILE IT'S BUILDING, add environment variables:
-   - Go to "Variables" tab
-   - Click "New Variable" and add:
+Should return: []
 
-   Variable 1: MONGODB_CONNECTION_URL
-   Value: (your MONGODB_URL from Step 1)
-
-   Variable 2: NODE_ENV
-   Value: production
-
-7. Wait 3-5 minutes for build to complete
-8. Once done, copy the public URL (looks like: https://genieacs-abc123.railway.app)
-9. SAVE THIS: RAILWAY_URL
-
-10. TEST IT WORKS:
-    Open terminal and run:
-    curl https://your-railway-url/devices
-
-    Should return: []
+✅ Your backend is live!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🎨 STEP 3: DEPLOY FRONTEND ON VERCEL (8 minutes)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 4: DEPLOY FRONTEND TO VERCEL (8 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 1. Go to: https://vercel.com
 2. Sign up with GitHub (suzilxptr)
-3. Authorize Vercel to access GitHub
-4. Click "Add New" → "Project"
-5. Select "Import Git Repository"
-6. Find and select "poc-home-security-app"
+3. Click "Add New" → "Project"
+4. Select "Import Git Repository"
+5. Find and select "poc-home-security-app"
 
-7. BEFORE DEPLOYING, add environment variable:
+6. BEFORE DEPLOYING, set environment variable:
    - Click "Environment Variables"
-   - Add:
+   - Name: VITE_NBI_URL
+   - Value: https://genieacs-api.fly.dev
+   (use your actual Fly.io URL)
 
-   Name: VITE_NBI_URL
-   Value: https://your-railway-url
-   (Replace with your actual RAILWAY_URL from Step 2)
-
-8. Click "Deploy"
-9. Wait 2-3 minutes for build
-10. Once done, copy your Vercel URL (looks like: https://your-app.vercel.app)
-11. SAVE THIS: VERCEL_URL
-
-12. TEST IT WORKS:
-    - Open your VERCEL_URL in browser
-    - Should see: Home Security Dashboard
-    - No errors in browser console (F12 → Console)
+7. Click "Deploy"
+8. Wait 2-3 minutes
+9. Copy your Vercel URL: https://your-app.vercel.app
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🔗 STEP 4: CONNECT FRONTEND TO BACKEND (2 minutes)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 5: TEST & SHARE (2 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-1. Open your VERCEL_URL in browser
-2. Click "Settings" button (top right)
-3. Find "NBI URL" field
-4. Change it to your RAILWAY_URL
-5. Click outside field (auto-saves)
-6. Refresh page (Cmd+R or Ctrl+R)
+1. Open your Vercel URL in browser:
+   https://your-app.vercel.app
 
-Now your frontend can talk to your backend!
+2. Should see: Home Security Dashboard
+3. No errors in console (F12 → Console)
+
+4. (Optional) Run virtual device from your machine:
+   ACS_URL=https://genieacs-api.fly.dev node cpe-simulator.js
+
+   Wait 30-60 seconds, refresh dashboard
+   Device should appear as "Online"
+
+✅ DONE! Your app is live!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✅ STEP 5: TEST WITH VIRTUAL DEVICES (Optional)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎉 YOUR PUBLIC URLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Run a virtual CPE device from your local machine:
+Share these with users:
 
-1. Open terminal in your project directory
-2. Run:
+Frontend Dashboard:
+  https://your-app.vercel.app
 
-   ACS_URL=https://your-railway-url node cpe-simulator.js
+Backend API (GenieACS):
+  https://genieacs-api.fly.dev
 
-3. Wait 30-60 seconds
-4. Refresh your dashboard
-5. A device should appear as "Online" (green)
+GitHub Repo:
+  https://github.com/suzilxptr/poc-home-security-app
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🎉 YOU'RE DONE! YOUR APP IS LIVE!
+💰 COST BREAKDOWN
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Your URLs:
-  Frontend: https://your-app.vercel.app
-  Backend: https://your-genieacs.railway.app
-  GitHub: https://github.com/suzilxptr/poc-home-security-app
-
-Cost: $0/month (Vercel free + Railway $5 free credits + MongoDB free)
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📚 DOCUMENTATION
-
-For detailed explanations, see in your repo:
-  • DEPLOY.md - Full deployment guide
-  • README.md - Project overview
-  • GETTING_STARTED.md - Local development
+Service              Cost        Why
+─────────────────────────────────────────────────
+Vercel               $0          100GB free bandwidth
+Fly.io               $0          $5 free credit/month
+MongoDB Atlas        $0          512MB free database
+─────────────────────────────────────────────────
+TOTAL                $0/month    Completely free!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🔧 TROUBLESHOOTING
+📚 HELP & TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Problem: "Connection refused" in dashboard
-Solution: Verify Settings → NBI URL is correct in your app
+Check logs:
+  flyctl logs
 
-Problem: Backend build failed on Railway
-Solution: Check Railway dashboard → Logs, verify MongoDB and Redis URLs
+App status:
+  flyctl status
 
-Problem: Devices not appearing
-Solution: Wait 30-60 seconds, then refresh. Run CPE simulator to test.
+See secrets:
+  flyctl secrets list
 
-Problem: App shows blank page
-Solution: Check browser console (F12 → Console) for errors
+More help:
+  Read FLY_DEPLOYMENT.md (complete guide with troubleshooting)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Questions? All answers are in DEPLOY.md in your repository!
-
-Good luck! 🚀
+Ready? Start with STEP 1! 🚀
