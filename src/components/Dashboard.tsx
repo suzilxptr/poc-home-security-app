@@ -21,7 +21,9 @@ export const Dashboard: React.FC = () => {
 
   const selectedDevice = devices.find((d) => d._id === selectedDeviceId);
 
-  // Polling removed - users can click refresh button manually
+  useEffect(() => {
+    fetchDevices();
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50">
